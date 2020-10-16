@@ -38,6 +38,10 @@ android {
             targetCompatibility 1.8
         }
     }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
@@ -46,6 +50,7 @@ dependencies {
     implementation deps.support.appcompat
     implementation deps.support.recyclerview
     implementation deps.support.constraintlayout
+    implementation deps.support.fragment
 
     // MultiDex
     implementation deps.android.multidex
@@ -57,6 +62,10 @@ dependencies {
     implementation deps.lifecycle.extensions
     kapt deps.lifecycle.compiler
     testImplementation deps.arch_core.testing
+
+    // Navigation
+    implementation deps.navigation.fragment
+    implementation deps.navigation.uiKtx
 
     // Room
     implementation deps.room.runtime

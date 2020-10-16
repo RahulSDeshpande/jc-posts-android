@@ -1,4 +1,4 @@
-package ui.base
+package com.rahulografy.jcposts.ui.base.view
 
 import android.os.Bundle
 import androidx.annotation.LayoutRes
