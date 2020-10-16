@@ -24,7 +24,7 @@
         android:padding="@dimen/space_normal">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivNoData"
+            android:id="@+id/ivIsFavourite"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
@@ -33,6 +33,22 @@
             android:clickable="true"
             android:focusable="true"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_star_outlined"
+            tools:srcCompat="@drawable/ic_star_filled" />
+
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/ivIsFavourite2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="@drawable/selector_favourite"
+            android:button="@null"
+            android:checked="true"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toStartOf="@+id/ivIsFavourite"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_star_outlined"
             tools:srcCompat="@drawable/ic_star_filled" />
