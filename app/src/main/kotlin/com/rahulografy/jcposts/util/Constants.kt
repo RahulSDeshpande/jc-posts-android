@@ -1,4 +1,4 @@
-package util
+package com.rahulografy.jcposts.util
 
 object Constants {
 

@@ -1,4 +1,4 @@
-package util
+package com.rahulografy.jcposts.util
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

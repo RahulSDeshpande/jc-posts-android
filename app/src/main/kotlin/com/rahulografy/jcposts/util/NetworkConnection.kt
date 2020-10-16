@@ -1,4 +1,4 @@
-package util
+package com.rahulografy.jcposts.util
 
 import android.content.Context
 import android.net.ConnectivityManager

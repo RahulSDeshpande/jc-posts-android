@@ -1,4 +1,4 @@
-package ui.base
+package com.rahulografy.jcposts.ui.base.view
 
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
