@@ -9,16 +9,16 @@ import java.net.URL
 
 private const val TAG = "NetworkConnection"
 
-fun isNetworkAvailable(context: Context?): Boolean {
+fun isAppOnline(context: Context?): Boolean {
     val service = Context.CONNECTIVITY_SERVICE
     val manager = context?.getSystemService(service) as ConnectivityManager?
     val network = manager?.activeNetworkInfo
-    Log.d(TAG, "hasNetworkAvailable: ${(network != null)}")
+    Log.d(TAG, "isAppOnline: ${(network != null)}")
     return (network?.isConnected) ?: false
 }
 
 fun isServerUp(context: Context): Boolean {
-    if (isNetworkAvailable(context)) {
+    if (isAppOnline(context)) {
         try {
             val connection =
                 URL(Constants.Network.Api.URL_BASE).openConnection() as HttpURLConnection
