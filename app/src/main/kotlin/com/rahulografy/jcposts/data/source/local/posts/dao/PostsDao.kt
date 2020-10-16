@@ -13,16 +13,16 @@ interface PostsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun savePost(post: PostEntity)
 
-    @Query("SELECT * FROM posts ORDER BY id ASC")
+    @Query("SELECT * FROM post ORDER BY id ASC")
     fun getAllPosts(): Single<List<PostEntity>>
 
-    @Query("SELECT * FROM posts WHERE id = :postId")
+    @Query("SELECT * FROM post WHERE id = :postId")
     fun getPostById(postId: Int): Single<PostEntity>
 
     // TODO | ACCEPT 'postId' INSTEAD OF 'PostEntity'
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun favoritePost(post: PostEntity)
+    fun updatePost(post: PostEntity)
 
-    @Query("SELECT * FROM posts WHERE isFavorite = 'true'")
+    @Query("SELECT * FROM post WHERE isFavorite = 'true'")
     fun getFavoritePosts(): Single<List<PostEntity>>
 }
