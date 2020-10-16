@@ -34,7 +34,5 @@ data class PostEntity(
     val userId: Int?,
 
     @ColumnInfo(name = "isFavorite")
-    @Expose
-    @SerializedName("isFavorite")
     val isFavorite: Boolean? = false
 )
