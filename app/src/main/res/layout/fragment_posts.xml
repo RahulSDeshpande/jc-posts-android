@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.rahulografy.jcposts.ui.main.posts.PostsFragmentViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
+
+        <com.rahulografy.jcposts.ui.component.view.SwipeRefreshLayout2
+            android:id="@+id/srlPosts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:isRefreshing="@{viewModel.isDataProcessing}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:onRefreshListener="@{() -> viewModel.getPosts(true)}">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPosts"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="@dimen/space_large"
+                    android:clipToPadding="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_post" />
+
+                <include
+                    android:id="@+id/layoutNoData"
+                    layout="@layout/layout_no_data"
+                    android:visibility="gone" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.rahulografy.jcposts.ui.component.view.SwipeRefreshLayout2>
+
+    </LinearLayout>
+
+</layout>
