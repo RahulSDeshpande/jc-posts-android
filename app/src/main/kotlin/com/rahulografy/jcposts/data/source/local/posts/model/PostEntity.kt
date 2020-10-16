@@ -8,7 +8,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.rahulografy.jcposts.util.RoomConverter
 
-@Entity(tableName = "posts")
+@Entity(tableName = "post")
 @TypeConverters(RoomConverter::class)
 data class PostEntity(
 
