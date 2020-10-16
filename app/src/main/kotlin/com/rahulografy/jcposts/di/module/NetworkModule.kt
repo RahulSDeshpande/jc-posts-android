@@ -41,6 +41,10 @@ class NetworkModule {
 
     @Provides
     @ApplicationScoped
+    fun provideOkHttpClient(application: Application): OkHttpClient = buildOkHttpClient(application)
+
+    @Provides
+    @ApplicationScoped
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit =
         Retrofit
             .Builder()
