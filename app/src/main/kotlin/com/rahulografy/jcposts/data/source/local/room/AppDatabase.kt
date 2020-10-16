@@ -9,7 +9,8 @@ import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
     entities = [
         PostEntity::class
     ],
-    version = 1
+    version = 1,
+    exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
 
