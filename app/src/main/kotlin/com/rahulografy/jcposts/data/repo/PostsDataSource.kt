@@ -7,12 +7,11 @@ interface PostsDataSource {
 
     fun savePosts(posts: List<PostEntity>) {}
 
+    fun updatePost(post: PostEntity) {}
+
     fun getPosts(): Single<List<PostEntity>>
 
-    // TODO | ACCEPT 'postId' INSTEAD OF 'PostEntity'
-    fun favoritePost(post: PostEntity) {}
-
-    fun getFavoritePosts(): Single<List<PostEntity>>? = null
+    fun getFavoritePosts(): Single<List<PostEntity>> = Single.just(arrayListOf())
 
     fun refreshPosts() {}
 }

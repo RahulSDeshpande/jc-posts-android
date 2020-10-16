@@ -34,5 +34,5 @@ data class PostEntity(
     val userId: Int?,
 
     @ColumnInfo(name = "isFavorite")
-    val isFavorite: Boolean? = false
+    var isFavorite: Boolean? = false
 )
