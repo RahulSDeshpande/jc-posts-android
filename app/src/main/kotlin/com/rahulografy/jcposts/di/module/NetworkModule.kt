@@ -2,6 +2,7 @@ package com.rahulografy.jcposts.di.module
 
 import android.app.Application
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.rahulografy.jcposts.data.source.remote.posts.service.PostsRemoteService
 import com.rahulografy.jcposts.di.ApplicationScoped
 import com.rahulografy.jcposts.util.Constants.Network.Api.URL_BASE
 import com.rahulografy.jcposts.util.Constants.Network.Cache.NAME
@@ -46,4 +47,9 @@ class NetworkModule {
             .baseUrl(URL_BASE)
             .client(okHttpClient)
             .build()
+
+    @Provides
+    @ApplicationScoped
+    fun providePostsRemoteService(retrofit: Retrofit): PostsRemoteService =
+        retrofit.create(PostsRemoteService::class.java)
 }
