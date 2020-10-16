@@ -19,7 +19,7 @@ class PostsRepository @Inject constructor(
     private var cachedFavoritePosts = arrayListOf<PostEntity>()
 
     // TODO WIP
-    private var isCachedPostsDirty = false
+    private var isCachedPostsDirty = true
 
     override fun savePosts(posts: List<PostEntity>) {
         localPostsDataSource.savePosts(posts)
