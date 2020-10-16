@@ -7,19 +7,16 @@ import com.rahulografy.jcposts.di.qualifier.LocalData
 import com.rahulografy.jcposts.di.qualifier.RemoteData
 import dagger.Binds
 import dagger.Module
-import javax.inject.Singleton
 
 @Module
 abstract class RepositoryModule {
 
-    @Singleton
     @Binds
     @LocalData
     abstract fun bindPostsLocalDataSource(
         postsLocalDataSource: PostsLocalDataSource
     ): PostsDataSource
 
-    @Singleton
     @Binds
     @RemoteData
     abstract fun bindPostsRemoteDataSource(
