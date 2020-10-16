@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">JC Posts</string>
+    <string name="title_home">JC Posts</string>
+
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="search">Search</string>
+</resources>
