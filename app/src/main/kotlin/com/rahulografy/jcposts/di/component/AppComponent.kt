@@ -4,6 +4,7 @@ import com.rahulografy.jcposts.App
 import com.rahulografy.jcposts.di.ApplicationScoped
 import com.rahulografy.jcposts.di.module.ActivityBindingModule
 import com.rahulografy.jcposts.di.module.AppModule
+import com.rahulografy.jcposts.di.module.NetworkModule
 import com.rahulografy.jcposts.di.module.ViewModelModule
 import dagger.BindsInstance
 import dagger.Component
@@ -16,7 +17,8 @@ import dagger.android.support.AndroidSupportInjectionModule
         AndroidSupportInjectionModule::class,
         AppModule::class,
         ActivityBindingModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        NetworkModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {
