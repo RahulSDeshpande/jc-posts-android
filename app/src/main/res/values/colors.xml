@@ -26,4 +26,6 @@
     <color name="default_text_color_2">#797E7E</color>
     <color name="default_text_color_white">#FFFFFF</color>
 
+    <color name="favorite">@color/colorAccent</color>
+
 </resources>

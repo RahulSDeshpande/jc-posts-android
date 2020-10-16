@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="postEntity"
+            type="com.rahulografy.jcposts.data.source.local.posts.model.PostEntity" />
+
+        <variable
+            name="postEventListener"
+            type="com.rahulografy.jcposts.ui.main.posts.listener.PostEventListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="@{() -> postEventListener.onListItemClicked(postEntity)}"
+        android:padding="@dimen/space_normal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivNoData"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_star_outlined"
+            tools:srcCompat="@drawable/ic_star_filled" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPostUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_tiny"
+            android:ellipsize="end"
+            android:fontFamily="@font/sans_bold"
+            android:maxLines="2"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="UserName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPostTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_tiny"
+            android:layout_marginTop="@dimen/space_small"
+            android:ellipsize="end"
+            android:fontFamily="@font/sans_bold"
+            android:maxLines="2"
+            android:textColor="@color/default_text_color_0"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPostUser"
+            tools:text="@string/lorem_ipsum_tiny" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPostDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_tiny"
+            android:layout_marginTop="@dimen/space_small"
+            android:ellipsize="end"
+            android:textColor="@color/default_text_color_0"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPostTitle"
+            tools:text="@string/lorem_ipsum_small" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

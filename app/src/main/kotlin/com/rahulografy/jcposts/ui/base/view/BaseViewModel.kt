@@ -1,6 +1,8 @@
 package com.rahulografy.jcposts.ui.base.view
 
 import androidx.lifecycle.ViewModel
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -12,11 +14,13 @@ abstract class BaseViewModel : ViewModel() {
 
     open fun stop() {}
 
-    fun addDisposable(disposable: Disposable?) {
+    protected fun addDisposable(disposable: Disposable?) {
         disposable?.let {
             if (it.isDisposed.not()) {
                 compositeDisposable.add(disposable)
             }
         }
     }
+
+    protected fun scheduleInMainThread(): Scheduler = AndroidSchedulers.mainThread()
 }

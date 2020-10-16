@@ -1,14 +1,14 @@
 package com.rahulografy.jcposts.data.repo
 
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
+import com.rahulografy.jcposts.di.ApplicationScoped
 import com.rahulografy.jcposts.di.qualifier.LocalData
 import com.rahulografy.jcposts.di.qualifier.RemoteData
 import com.rahulografy.jcposts.util.ext.replace
 import io.reactivex.Single
 import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+@ApplicationScoped
 class PostsRepository @Inject constructor(
     @LocalData private val localPostsDataSource: PostsDataSource,
     @RemoteData private val remotePostsDataSource: PostsDataSource
