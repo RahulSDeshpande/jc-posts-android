@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "98af8864ae0f099bc6d1b1f7a4112d1d",
+    "identityHash": "044e915b580b60b49cdc565c6d234a4d",
     "entities": [
       {
         "tableName": "post",
@@ -95,7 +95,16 @@
           ],
           "autoGenerate": false
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_comment_postId",
+            "unique": false,
+            "columnNames": [
+              "postId"
+            ],
+            "createSql": "CREATE  INDEX `index_comment_postId` ON `${TABLE_NAME}` (`postId`)"
+          }
+        ],
         "foreignKeys": [
           {
             "table": "post",
@@ -113,7 +122,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"98af8864ae0f099bc6d1b1f7a4112d1d\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"044e915b580b60b49cdc565c6d234a4d\")"
     ]
   }
 }
