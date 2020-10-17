@@ -69,7 +69,6 @@ class PostsFragmentViewModel
     }
 
     fun updatePost(postEntity: PostEntity) {
-
         postsRepository.updatePost(postEntity)
     }
 }

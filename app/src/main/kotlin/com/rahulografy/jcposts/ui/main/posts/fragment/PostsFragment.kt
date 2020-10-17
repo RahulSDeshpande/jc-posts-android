@@ -87,7 +87,7 @@ class PostsFragment :
         if (posts.isNullOrEmpty().not()) {
             showPostsRecyclerView(show = true)
 
-            viewModel.postsObservableField.set(posts)
+            // viewModel.postsObservableField.set(posts)
         } else {
             showPostsRecyclerView(show = false)
         }

@@ -7,9 +7,8 @@ import com.rahulografy.jcposts.R
 import com.rahulografy.jcposts.data.source.local.comments.model.CommentEntity
 import com.rahulografy.jcposts.ui.base.adapter.BaseListAdapter
 
-class CommentsAdapter(
-    private var comments: ArrayList<CommentEntity> = arrayListOf()
-) : BaseListAdapter<CommentEntity, CommentViewHolder>(CommentsDiffUtilItemCallback()) {
+class CommentsAdapter :
+    BaseListAdapter<CommentEntity, CommentViewHolder>(CommentsDiffUtilItemCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         CommentViewHolder(
@@ -21,21 +20,12 @@ class CommentsAdapter(
             )
         )
 
-    override fun getItemCount() = comments.size
-
     override fun onBindViewHolder(viewHolder: CommentViewHolder, position: Int) =
-        viewHolder.bind(commentEntity = comments[position])
+        viewHolder.bind(commentEntity = getItem(position))
 
     override fun setData(data: List<CommentEntity>?) {
-        comments.clear()
-        data?.let { comments.addAll(it) }
-        submitList(comments)
+        submitList(data)
     }
 
-    override fun addData(data: List<CommentEntity>?) {
-        data?.let {
-            comments.addAll(it)
-            submitList(comments)
-        }
-    }
+    override fun addData(data: List<CommentEntity>?) {}
 }
