@@ -1,4 +1,4 @@
-package com.rahulografy.jcposts.ui.main.posts
+package com.rahulografy.jcposts.ui.main.posts.fragment
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
