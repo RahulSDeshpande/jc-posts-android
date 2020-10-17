@@ -44,7 +44,7 @@ class PostsRepository @Inject constructor(
             return Single.just(cachedPosts)
         }
 
-        return if (isCachedPostsDirty) {
+        return if (cachedPosts.isEmpty() || isCachedPostsDirty) {
             getAndSaveRemotePosts()
         } else {
             getAndCacheLocalPosts()

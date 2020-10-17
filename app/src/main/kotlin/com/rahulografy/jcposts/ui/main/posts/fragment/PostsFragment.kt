@@ -7,9 +7,12 @@ import com.rahulografy.jcposts.R
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 import com.rahulografy.jcposts.databinding.FragmentPostsBinding
 import com.rahulografy.jcposts.ui.base.view.BaseFragment
+import com.rahulografy.jcposts.ui.main.postdetail.fragment.PostDetailFragment
+import com.rahulografy.jcposts.ui.main.posts.PostsSharedViewModel
 import com.rahulografy.jcposts.ui.main.posts.adapter.PostsAdapter
 import com.rahulografy.jcposts.ui.main.posts.enum.ContentType.Companion.POSTS
 import com.rahulografy.jcposts.ui.main.posts.listener.PostEventListener
+import com.rahulografy.jcposts.util.ext.initViewModel
 import com.rahulografy.jcposts.util.ext.notifyChange
 import com.rahulografy.jcposts.util.ext.show
 import kotlinx.android.synthetic.main.fragment_posts.*
@@ -22,11 +25,11 @@ class PostsFragment :
         private const val ARG_CONTENT_TYPE = "ARG_CONTENT_TYPE"
 
         fun init(contentType: String): PostsFragment {
-            val productFragment = PostsFragment()
+            val postFragment = PostsFragment()
             val bundle = Bundle()
             bundle.putString(ARG_CONTENT_TYPE, contentType)
-            productFragment.arguments = bundle
-            return productFragment
+            postFragment.arguments = bundle
+            return postFragment
         }
     }
 
@@ -35,6 +38,18 @@ class PostsFragment :
     override var viewModelClass = PostsFragmentViewModel::class.java
 
     override val bindingVariable = BR.viewModel
+
+    lateinit var postsSharedViewModel: PostsSharedViewModel
+
+    private var postDetailFragment: PostDetailFragment? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        activity?.apply {
+            postsSharedViewModel = initViewModel(PostsSharedViewModel::class.java)
+        }
+    }
 
     override fun initUi() {
         viewModel.contentType = arguments?.getString(ARG_CONTENT_TYPE) ?: POSTS
@@ -45,6 +60,13 @@ class PostsFragment :
     }
 
     override fun initObservers() {
+        postsSharedViewModel
+            .postUpdated
+            .observe(
+                lifecycleOwner = this@PostsFragment,
+                observer = Observer { }
+            )
+
         viewModel.apply {
             postsMutableLiveData
                 .observe(
@@ -76,8 +98,11 @@ class PostsFragment :
         layoutNoData.show(show = show.not())
     }
 
-    override fun onListItemClicked(postEntity: PostEntity) {
-        openPostDetailFragment(postId = postEntity.id)
+    override fun onListItemClicked(listPosition: Int, postEntity: PostEntity) {
+        openPostDetailFragment(
+            listPosition = listPosition,
+            postId = postEntity
+        )
     }
 
     override fun onFavouriteIconClicked(
@@ -88,7 +113,15 @@ class PostsFragment :
         viewModel.updatePost(postEntity)
     }
 
-    private fun openPostDetailFragment(postId: Int?) {
-        // TODO | WIP
+    private fun openPostDetailFragment(listPosition: Int, postId: PostEntity) {
+        if (postDetailFragment == null) {
+            postDetailFragment = PostDetailFragment()
+        }
+
+        if (postDetailFragment?.isVisible != true) {
+            postsSharedViewModel.postListPosition = listPosition
+            postsSharedViewModel.post = postId
+            postDetailFragment?.show(childFragmentManager, postDetailFragment?.tag)
+        }
     }
 }

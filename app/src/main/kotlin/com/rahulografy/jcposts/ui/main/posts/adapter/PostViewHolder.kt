@@ -12,31 +12,40 @@ class PostViewHolder(private val binding: ItemPostBinding) :
         postEntity: PostEntity,
         postEventListener: PostEventListener?
     ) {
-        with(receiver = binding)
-        {
+        binding.apply {
+
             this.postEntity = postEntity
             this.postEventListener = postEventListener
 
-            executePendingBindings()
+            clPost.setOnClickListener {
+                postEventListener?.onListItemClicked(
+                    listPosition = adapterPosition,
+                    postEntity = postEntity
+                )
+            }
 
             // TODO | THIS IS THE WORK AROUND, BCOZ 'app:onCheckChanged' IS WIP
-            binding.cbIsFavourite.apply {
+            cbPostIsFavourite.apply {
+
                 setOnCheckedChangeListener(null)
+
                 isChecked = postEntity.isFavourite
+
                 setOnCheckedChangeListener { _, isChecked ->
+
                     postEventListener?.onFavouriteIconClicked(
                         listPosition = adapterPosition,
                         postEntity = postEntity.apply {
                             isFavourite = isChecked
-                            favouritedTime = if (isChecked) {
-                                System.currentTimeMillis()
-                            } else {
-                                null
-                            }
+                            favouritedTime =
+                                if (isChecked) System.currentTimeMillis()
+                                else null
                         }
                     )
                 }
             }
+
+            executePendingBindings()
         }
     }
 }

@@ -15,14 +15,9 @@
 
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorWhite"
-        android:orientation="vertical">
-
         <com.rahulografy.jcposts.ui.component.view.SwipeRefreshLayout2
             android:id="@+id/srlPosts"
+            android:background="@color/colorWhite"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:isRefreshing="@{viewModel.isDataProcessing}"
@@ -51,7 +46,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.rahulografy.jcposts.ui.component.view.SwipeRefreshLayout2>
-
-    </LinearLayout>
 
 </layout>

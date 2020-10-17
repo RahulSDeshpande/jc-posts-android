@@ -15,16 +15,16 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="@{() -> postEventListener.onListItemClicked(postEntity)}"
         android:padding="@dimen/space_normal">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivIsFavourite"
+            android:id="@+id/ivPostIsFavourite"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center"
@@ -39,22 +39,20 @@
             tools:srcCompat="@drawable/ic_star_filled" />
 
         <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/cbIsFavourite"
+            android:id="@+id/cbPostIsFavourite"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
             android:background="@drawable/selector_favourite"
             android:button="@null"
             android:clickable="true"
             android:focusable="true"
-            app:layout_constraintEnd_toStartOf="@+id/ivIsFavourite"
+            app:layout_constraintEnd_toStartOf="@+id/ivPostIsFavourite"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_star_outlined"
             tools:srcCompat="@drawable/ic_star_filled" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPostUser"
+            android:id="@+id/tvPostUserName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -79,7 +77,7 @@
             android:textColor="@color/default_text_color_0"
             android:textSize="@dimen/text_medium"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPostUser"
+            app:layout_constraintTop_toBottomOf="@+id/tvPostUserName"
             tools:text="@string/lorem_ipsum_tiny" />
 
         <androidx.appcompat.widget.AppCompatTextView

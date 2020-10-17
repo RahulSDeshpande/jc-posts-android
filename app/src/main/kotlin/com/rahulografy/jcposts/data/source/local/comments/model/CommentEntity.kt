@@ -27,7 +27,7 @@ data class CommentEntity(
     @SerializedName("id")
     val id: Int?,
 
-    @ColumnInfo(name = "postId")
+    @ColumnInfo(name = "postId", index = true)
     @Expose
     @SerializedName("postId")
     val postId: Int?,

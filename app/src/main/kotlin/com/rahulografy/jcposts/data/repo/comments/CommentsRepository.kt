@@ -34,7 +34,10 @@ class CommentsRepository @Inject constructor(
             return Single.just(cachedPostIdWiseCommentsMap[postId])
         }
 
-        return if (isCachedCommentsDirty) {
+        return if (cachedPostIdWiseCommentsMap.containsKey(postId).not()
+            || cachedPostIdWiseCommentsMap[postId]!!.isEmpty()
+            || isCachedCommentsDirty
+        ) {
             getAndSaveRemoteComments(postId = postId)
         } else {
             getAndCacheLocalComments(postId = postId)

@@ -6,6 +6,7 @@ import com.rahulografy.jcposts.di.ApplicationScoped
 import com.rahulografy.jcposts.di.ViewModelKey
 import com.rahulografy.jcposts.ui.main.activity.MainActivityViewModel
 import com.rahulografy.jcposts.ui.main.home.fragment.HomeFragmentViewModel
+import com.rahulografy.jcposts.ui.main.postdetail.fragment.PostDetailFragmentViewModel
 import com.rahulografy.jcposts.ui.main.posts.fragment.PostsFragmentViewModel
 import com.rahulografy.jcposts.util.ViewModelFactory
 import dagger.Binds
@@ -38,4 +39,9 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PostsFragmentViewModel::class)
     abstract fun bindPostsFragmentViewModel(viewModel: PostsFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(PostDetailFragmentViewModel::class)
+    abstract fun bindPostDetailFragmentViewModel(viewModel: PostDetailFragmentViewModel): ViewModel
 }
