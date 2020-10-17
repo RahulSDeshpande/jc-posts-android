@@ -23,6 +23,6 @@ interface PostsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun updatePost(post: PostEntity)
 
-    @Query("SELECT * FROM post WHERE isFavourite = 'true' ORDER BY favouritedTime DESC")
+    @Query("SELECT * FROM post WHERE isFavourite = 1 ORDER BY favouritedTime DESC")
     fun getFavouritePosts(): Single<List<PostEntity>>
 }
