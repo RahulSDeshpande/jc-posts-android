@@ -37,13 +37,10 @@
                     android:id="@+id/rvPosts"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:clipToPadding="false"
                     app:adapter="@{postsAdapter}"
                     app:items="@{viewModel.postsObservableField}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:itemCount="5"
                     tools:listitem="@layout/item_post" />
 
                 <include
