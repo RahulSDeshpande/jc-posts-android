@@ -4,6 +4,11 @@ import android.content.Context
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import jp.wasabeef.recyclerview.animators.FadeInDownAnimator
+import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator
 
 /**
  * Show [Toast] message
@@ -26,4 +31,64 @@ fun View.show(show: Boolean) {
         } else {
             View.GONE
         }
+}
+
+/**
+ * Set up RecyclerView LIST with default configurations like:
+ *
+ * * VERTICAL ->
+ *   - itemAnimator -> FadeInUpAnimator
+ *   - layoutManager -> LinearLayoutManager.VERTICAL
+ *
+ * * HORIZONTAL ->
+ *   - itemAnimator -> FadeInRightAnimator
+ *   - layoutManager -> LinearLayoutManager.HORIZONTAL
+ */
+fun RecyclerView.list(isVertical: Boolean = true) {
+    layoutManager =
+        if (isVertical) {
+            itemAnimator = FadeInDownAnimator()
+            if (itemDecorationCount == 0) {
+                addItemDecoration(
+                    DividerItemDecoration(
+                        context,
+                        LinearLayoutManager.VERTICAL
+                    )
+                )
+            }
+            LinearLayoutManager(
+                context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+        } else {
+            itemAnimator = FadeInLeftAnimator()
+            if (itemDecorationCount == 0) {
+                addItemDecoration(
+                    DividerItemDecoration(
+                        context,
+                        LinearLayoutManager.HORIZONTAL
+                    )
+                )
+            }
+            LinearLayoutManager(
+                context,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+        }
+}
+
+/**
+ * Notify any registered observers that the item at <code>position</code> has changed.
+ * Equivalent to calling [notifyItemChanged(position, null);].
+ *
+ * This is an item change event, not a structural change event. It indicates that any
+ * reflection of the data at [position] is out of date and should be updated.
+ * The item at [position] retains the same identity.
+ *
+ * @param position Position of the item that has changed
+ */
+fun RecyclerView?.notifyChange(position: Int) {
+    this?.adapter?.notifyItemChanged(position)
 }
