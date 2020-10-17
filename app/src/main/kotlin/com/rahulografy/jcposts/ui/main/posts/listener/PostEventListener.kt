@@ -4,7 +4,7 @@ import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 
 interface PostEventListener {
 
-    fun onListItemClicked(postEntity: PostEntity)
+    fun onListItemClicked(listPosition: Int, postEntity: PostEntity)
 
     fun onFavouriteIconClicked(
         listPosition: Int,
