@@ -2,7 +2,7 @@ package com.rahulografy.jcposts.ui.main.activity
 
 import com.rahulografy.jcposts.di.FragmentScoped
 import com.rahulografy.jcposts.ui.main.home.fragment.HomeFragment
-import com.rahulografy.jcposts.ui.main.posts.PostsFragment
+import com.rahulografy.jcposts.ui.main.posts.fragment.PostsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

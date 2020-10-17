@@ -6,7 +6,7 @@ import com.rahulografy.jcposts.di.ApplicationScoped
 import com.rahulografy.jcposts.di.ViewModelKey
 import com.rahulografy.jcposts.ui.main.activity.MainActivityViewModel
 import com.rahulografy.jcposts.ui.main.home.fragment.HomeFragmentViewModel
-import com.rahulografy.jcposts.ui.main.posts.PostsFragmentViewModel
+import com.rahulografy.jcposts.ui.main.posts.fragment.PostsFragmentViewModel
 import com.rahulografy.jcposts.util.ViewModelFactory
 import dagger.Binds
 import dagger.Module

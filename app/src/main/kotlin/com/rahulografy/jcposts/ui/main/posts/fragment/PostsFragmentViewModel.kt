@@ -1,4 +1,4 @@
-package com.rahulografy.jcposts.ui.main.posts
+package com.rahulografy.jcposts.ui.main.posts.fragment
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
