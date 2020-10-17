@@ -6,7 +6,11 @@ object Constants {
 
         object Api {
             const val URL_BASE = "https://jsonplaceholder.typicode.com/"
+
             const val URL_GET_POSTS = "posts"
+
+            const val URL_PATH_POST_ID = "postId"
+            const val URL_GET_COMMENTS = "$URL_GET_POSTS/{$URL_PATH_POST_ID}/comments"
         }
 
         object Timeout {
@@ -17,6 +21,13 @@ object Constants {
 
         object Cache {
             const val NAME = "JCPostsCache"
+        }
+
+        object Db {
+            const val DB_NAME = "jc-posts.db"
+
+            const val ENTITY_POST = "post"
+            const val ENTITY_COMMENT = "comment"
         }
     }
 }

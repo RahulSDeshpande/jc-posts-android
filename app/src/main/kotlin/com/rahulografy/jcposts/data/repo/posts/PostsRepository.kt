@@ -1,4 +1,4 @@
-package com.rahulografy.jcposts.data.repo
+package com.rahulografy.jcposts.data.repo.posts
 
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 import com.rahulografy.jcposts.di.ApplicationScoped
@@ -33,6 +33,7 @@ class PostsRepository @Inject constructor(
             .find { it.id == post.id }
             ?.isFavourite = post.isFavourite
 
+        // TODO | WIP | CONSIDER USING COROUTINE
         Observable.just(localPostsDataSource)
             .subscribeOn(Schedulers.io())
             .subscribe { it.updatePost(post) }

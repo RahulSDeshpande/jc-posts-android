@@ -14,7 +14,7 @@ interface PostsDao {
     fun savePost(post: PostEntity)
 
     @Query("SELECT * FROM post ORDER BY id ASC")
-    fun getAllPosts(): Single<List<PostEntity>>
+    fun getPosts(): Single<List<PostEntity>>
 
     @Query("SELECT * FROM post WHERE id = :postId")
     fun getPostById(postId: Int): Single<PostEntity>
