@@ -1,13 +1,16 @@
 package com.rahulografy.jcposts.data.source.local.comments.model
 
-import androidx.room.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
-import com.rahulografy.jcposts.util.RoomConverter
+import com.rahulografy.jcposts.util.Constants.Network.Db.ENTITY_COMMENT
 
 @Entity(
-    tableName = "comment",
+    tableName = ENTITY_COMMENT,
     foreignKeys = [ForeignKey(
         entity = PostEntity::class,
         parentColumns = arrayOf("id"),
@@ -15,7 +18,7 @@ import com.rahulografy.jcposts.util.RoomConverter
         onDelete = ForeignKey.CASCADE
     )]
 )
-@TypeConverters(RoomConverter::class)
+// @TypeConverters(RoomConverter::class)
 data class CommentEntity(
 
     @PrimaryKey
