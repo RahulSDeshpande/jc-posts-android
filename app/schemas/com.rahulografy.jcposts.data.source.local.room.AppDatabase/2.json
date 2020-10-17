@@ -1,12 +1,12 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "bf44e323565f87a1feea61dbbcf18495",
+    "version": 2,
+    "identityHash": "82455d18c200b9904bc76453060c905b",
     "entities": [
       {
         "tableName": "post",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `body` TEXT, `title` TEXT, `userId` INTEGER, `isFavourite` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER, `body` TEXT, `title` TEXT, `userId` INTEGER, `isFavourite` INTEGER NOT NULL, `favouritedTime` INTEGER, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -36,6 +36,12 @@
             "fieldPath": "isFavourite",
             "columnName": "isFavourite",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "favouritedTime",
+            "columnName": "favouritedTime",
+            "affinity": "INTEGER",
             "notNull": false
           }
         ],
@@ -51,7 +57,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"bf44e323565f87a1feea61dbbcf18495\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"82455d18c200b9904bc76453060c905b\")"
     ]
   }
 }
