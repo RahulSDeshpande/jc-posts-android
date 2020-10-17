@@ -2,7 +2,7 @@ package com.rahulografy.jcposts.ui.main.posts
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
-import com.rahulografy.jcposts.data.repo.PostsRepository
+import com.rahulografy.jcposts.data.repo.posts.PostsRepository
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 import com.rahulografy.jcposts.ui.base.view.BaseViewModel
 import com.rahulografy.jcposts.ui.main.posts.enum.ContentType.Companion.POSTS

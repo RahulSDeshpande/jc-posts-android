@@ -1,6 +1,6 @@
 package com.rahulografy.jcposts.data.source.local.posts.datasource
 
-import com.rahulografy.jcposts.data.repo.PostsDataSource
+import com.rahulografy.jcposts.data.repo.posts.PostsDataSource
 import com.rahulografy.jcposts.data.source.local.posts.dao.PostsDao
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 import com.rahulografy.jcposts.di.ApplicationScoped
@@ -17,7 +17,7 @@ class PostsLocalDataSource @Inject constructor(
         }
     }
 
-    override fun getPosts() = postsDao.getAllPosts()
+    override fun getPosts() = postsDao.getPosts()
 
     override fun updatePost(post: PostEntity) {
         postsDao.updatePost(post)

@@ -22,5 +22,12 @@ object Constants {
         object Cache {
             const val NAME = "JCPostsCache"
         }
+
+        object Db {
+            const val DB_NAME = "jc-posts.db"
+
+            const val ENTITY_POST = "post"
+            const val ENTITY_COMMENT = "comment"
+        }
     }
 }

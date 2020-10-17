@@ -1,4 +1,4 @@
-package com.rahulografy.jcposts.data.repo
+package com.rahulografy.jcposts.data.repo.posts
 
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 import io.reactivex.Single
