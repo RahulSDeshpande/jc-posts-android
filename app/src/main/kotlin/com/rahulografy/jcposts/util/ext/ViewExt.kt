@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import jp.wasabeef.recyclerview.animators.FadeInDownAnimator
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator
+import jp.wasabeef.recyclerview.animators.FadeInUpAnimator
 
 /**
  * Show [Toast] message
@@ -47,7 +47,7 @@ fun View.show(show: Boolean) {
 fun RecyclerView.list(isVertical: Boolean = true) {
     layoutManager =
         if (isVertical) {
-            itemAnimator = FadeInDownAnimator()
+            itemAnimator = FadeInUpAnimator()
             if (itemDecorationCount == 0) {
                 addItemDecoration(
                     DividerItemDecoration(

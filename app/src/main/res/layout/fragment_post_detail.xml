@@ -47,8 +47,9 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="700dp"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:minHeight="800dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -67,7 +68,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/divider_height"
                     android:background="@drawable/divider"
-                    android:elevation="4dp"
                     app:layout_constraintTop_toBottomOf="@+id/layoutPostDetail" />
 
                 <com.rahulografy.jcposts.ui.component.view.SwipeRefreshLayout2
