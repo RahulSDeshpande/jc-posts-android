@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="commentEntity"
+            type="com.rahulografy.jcposts.data.source.local.comments.model.CommentEntity" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_normal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCommentUser"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_person" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCommentUserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/space_small"
+            android:ellipsize="end"
+            android:fontFamily="@font/sans_bold"
+            android:maxLines="1"
+            android:text="@{commentEntity.name}"
+            android:textColor="@color/colorAccent"
+            android:textSize="@dimen/text_small"
+            app:layout_constraintStart_toEndOf="@+id/ivCommentUser"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Elliot Alderson" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCommentUserEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_tiny"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{commentEntity.email}"
+            android:textColor="@color/default_text_color_2"
+            android:textSize="@dimen/text_tiny"
+            app:layout_constraintStart_toStartOf="@+id/tvCommentUserName"
+            app:layout_constraintTop_toBottomOf="@+id/tvCommentUserName"
+            tools:text="elliot.alderson@mrrobot.com" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCommentDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_small"
+            android:text="@{commentEntity.body}"
+            android:textColor="@color/default_text_color_0"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvCommentUserEmail"
+            tools:text="@string/lorem_ipsum_small" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -28,4 +28,6 @@
 
     <color name="favourite">@color/colorAccent</color>
 
+    <color name="person">@color/colorAccent</color>
+
 </resources>
