@@ -26,7 +26,14 @@ class PostViewHolder(private val binding: ItemPostBinding) :
                 setOnCheckedChangeListener { _, isChecked ->
                     postEventListener?.onFavouriteIconClicked(
                         listPosition = adapterPosition,
-                        postEntity = postEntity.apply { isFavourite = isChecked }
+                        postEntity = postEntity.apply {
+                            isFavourite = isChecked
+                            favouritedTime = if (isChecked) {
+                                System.currentTimeMillis()
+                            } else {
+                                null
+                            }
+                        }
                     )
                 }
             }
