@@ -5,7 +5,9 @@ import com.rahulografy.jcposts.di.ApplicationScoped
 import com.rahulografy.jcposts.di.qualifier.LocalData
 import com.rahulografy.jcposts.di.qualifier.RemoteData
 import com.rahulografy.jcposts.util.ext.replace
+import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @ApplicationScoped
@@ -19,7 +21,7 @@ class PostsRepository @Inject constructor(
     private var cachedFavouritePosts = arrayListOf<PostEntity>()
 
     // TODO WIP
-    private var isCachedPostsDirty = true
+    private var isCachedPostsDirty = false
 
     override fun savePosts(posts: List<PostEntity>) {
         localPostsDataSource.savePosts(posts)
@@ -31,7 +33,9 @@ class PostsRepository @Inject constructor(
             .find { it.id == post.id }
             ?.isFavourite = post.isFavourite
 
-        return localPostsDataSource.updatePost(post)
+        Observable.just(localPostsDataSource)
+            .subscribeOn(Schedulers.io())
+            .subscribe { it.updatePost(post) }
     }
 
     override fun getPosts(): Single<List<PostEntity>> {
@@ -67,15 +71,15 @@ class PostsRepository @Inject constructor(
 
     override fun getFavouritePosts(): Single<List<PostEntity>> {
         // TODO | VERIFY
-        return if (isCachedPostsDirty.not()) {
+        return localPostsDataSource
+            .getFavouritePosts()
+            .doOnSuccess { favouritePosts ->
+                cachedFavouritePosts.replace(favouritePosts)
+            }
+        // TODO | WIP
+        /*if (isCachedPostsDirty.not()) {
             Single.just(cachedFavouritePosts)
-        } else {
-            localPostsDataSource
-                .getFavouritePosts()
-                .doOnSuccess { favouritePosts ->
-                    cachedFavouritePosts.replace(favouritePosts)
-                }
-        }
+        } else {*/
     }
 
     // TODO | WIP

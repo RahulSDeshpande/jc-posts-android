@@ -39,9 +39,9 @@ class PostsFragment :
     override fun initUi() {
         viewModel.contentType = arguments?.getString(ARG_CONTENT_TYPE) ?: POSTS
 
-        if (isAppOnline()) {
-            viewModel.getPosts()
-        }
+        isAppOnline()
+
+        viewModel.getPosts()
     }
 
     override fun initObservers() {

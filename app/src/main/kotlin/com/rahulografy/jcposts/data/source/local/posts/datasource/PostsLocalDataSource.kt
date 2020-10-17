@@ -18,4 +18,10 @@ class PostsLocalDataSource @Inject constructor(
     }
 
     override fun getPosts() = postsDao.getAllPosts()
+
+    override fun updatePost(post: PostEntity) {
+        postsDao.updatePost(post)
+    }
+
+    override fun getFavouritePosts() = postsDao.getFavouritePosts()
 }
