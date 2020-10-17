@@ -6,7 +6,7 @@ import com.rahulografy.jcposts.R
 import com.rahulografy.jcposts.databinding.FragmentHomeBinding
 import com.rahulografy.jcposts.ui.base.view.BaseFragment
 import com.rahulografy.jcposts.ui.main.home.fragment.adapter.HomeFragmentAdapter
-import com.rahulografy.jcposts.ui.main.posts.enum.ContentType.Companion.FAVORITES
+import com.rahulografy.jcposts.ui.main.posts.enum.ContentType.Companion.FAVOURITES
 import com.rahulografy.jcposts.ui.main.posts.enum.ContentType.Companion.POSTS
 import kotlinx.android.synthetic.main.fragment_home.*
 
@@ -25,7 +25,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>() 
     }
 
     private fun initViewPager() {
-        val contentTypes = listOf(POSTS, FAVORITES)
+        val contentTypes = listOf(POSTS, FAVOURITES)
 
         val productFragmentAdapter =
             HomeFragmentAdapter(

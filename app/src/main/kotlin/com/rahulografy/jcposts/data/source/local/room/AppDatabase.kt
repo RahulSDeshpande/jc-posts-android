@@ -9,10 +9,12 @@ import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
     entities = [
         PostEntity::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun postsDao(): PostsDao
+
+    // TODO | HANDLE DB MIGRATIONS
 }

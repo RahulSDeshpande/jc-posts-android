@@ -7,8 +7,10 @@ import com.rahulografy.jcposts.R
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 import com.rahulografy.jcposts.databinding.FragmentPostsBinding
 import com.rahulografy.jcposts.ui.base.view.BaseFragment
+import com.rahulografy.jcposts.ui.main.posts.adapter.PostsAdapter
 import com.rahulografy.jcposts.ui.main.posts.enum.ContentType.Companion.POSTS
 import com.rahulografy.jcposts.ui.main.posts.listener.PostEventListener
+import com.rahulografy.jcposts.util.ext.notifyChange
 import com.rahulografy.jcposts.util.ext.show
 import kotlinx.android.synthetic.main.fragment_posts.*
 
@@ -34,10 +36,8 @@ class PostsFragment :
 
     override val bindingVariable = BR.viewModel
 
-    private var contentType = POSTS
-
     override fun initUi() {
-        contentType = arguments?.getString(ARG_CONTENT_TYPE) ?: POSTS
+        viewModel.contentType = arguments?.getString(ARG_CONTENT_TYPE) ?: POSTS
 
         if (isAppOnline()) {
             viewModel.getPosts()
@@ -59,7 +59,7 @@ class PostsFragment :
     private fun initPostsRecyclerView(posts: ArrayList<PostEntity>?) {
         if (posts.isNullOrEmpty().not()) {
             viewDataBinding.apply {
-                // TODO | SET DATA TO ADAPTER
+                postsAdapter = PostsAdapter(postEventListener = this@PostsFragment)
                 executePendingBindings()
             }
 
@@ -77,10 +77,18 @@ class PostsFragment :
     }
 
     override fun onListItemClicked(postEntity: PostEntity) {
-        openCommentsFragment(postId = postEntity.id)
+        openPostDetailFragment(postId = postEntity.id)
     }
 
-    private fun openCommentsFragment(postId: Int?) {
+    override fun onFavouriteIconClicked(
+        listPosition: Int,
+        postEntity: PostEntity
+    ) {
+        rvPosts.notifyChange(listPosition)
+        viewModel.updatePost(postEntity)
+    }
+
+    private fun openPostDetailFragment(postId: Int?) {
         // TODO | WIP
     }
 }

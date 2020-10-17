@@ -11,7 +11,7 @@ interface PostsDataSource {
 
     fun getPosts(): Single<List<PostEntity>>
 
-    fun getFavoritePosts(): Single<List<PostEntity>> = Single.just(arrayListOf())
+    fun getFavouritePosts(): Single<List<PostEntity>> = Single.just(arrayListOf())
 
     fun refreshPosts() {}
 }
