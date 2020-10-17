@@ -33,6 +33,9 @@ data class PostEntity(
     @SerializedName("userId")
     val userId: Int?,
 
-    @ColumnInfo(name = "isFavorite")
-    var isFavorite: Boolean? = false
+    @ColumnInfo(name = "isFavourite")
+    var isFavourite: Boolean = false,
+
+    @ColumnInfo(name = "favouritedTime")
+    var favouritedTime: Long?
 )

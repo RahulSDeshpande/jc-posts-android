@@ -16,7 +16,7 @@ class PostsRepository @Inject constructor(
 
     private var cachedPosts = arrayListOf<PostEntity>()
 
-    private var cachedFavoritePosts = arrayListOf<PostEntity>()
+    private var cachedFavouritePosts = arrayListOf<PostEntity>()
 
     // TODO WIP
     private var isCachedPostsDirty = true
@@ -29,7 +29,7 @@ class PostsRepository @Inject constructor(
     override fun updatePost(post: PostEntity) {
         cachedPosts
             .find { it.id == post.id }
-            ?.isFavorite = post.isFavorite
+            ?.isFavourite = post.isFavourite
 
         return localPostsDataSource.updatePost(post)
     }
@@ -65,15 +65,15 @@ class PostsRepository @Inject constructor(
             }
     }
 
-    override fun getFavoritePosts(): Single<List<PostEntity>> {
+    override fun getFavouritePosts(): Single<List<PostEntity>> {
         // TODO | VERIFY
         return if (isCachedPostsDirty.not()) {
-            Single.just(cachedFavoritePosts)
+            Single.just(cachedFavouritePosts)
         } else {
             localPostsDataSource
-                .getFavoritePosts()
-                .doOnSuccess { favoritePosts ->
-                    cachedFavoritePosts.replace(favoritePosts)
+                .getFavouritePosts()
+                .doOnSuccess { favouritePosts ->
+                    cachedFavouritePosts.replace(favouritePosts)
                 }
         }
     }
