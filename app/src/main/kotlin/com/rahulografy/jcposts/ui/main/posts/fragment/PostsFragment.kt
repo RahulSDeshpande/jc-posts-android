@@ -57,6 +57,11 @@ class PostsFragment :
         isAppOnline()
 
         viewModel.getPosts()
+
+        viewDataBinding.apply {
+            postsAdapter = PostsAdapter(postEventListener = this@PostsFragment)
+            executePendingBindings()
+        }
     }
 
     override fun initObservers() {
@@ -80,14 +85,9 @@ class PostsFragment :
 
     private fun initPostsRecyclerView(posts: ArrayList<PostEntity>?) {
         if (posts.isNullOrEmpty().not()) {
-            viewDataBinding.apply {
-                postsAdapter = PostsAdapter(postEventListener = this@PostsFragment)
-                executePendingBindings()
-            }
+            showPostsRecyclerView(show = true)
 
             viewModel.postsObservableField.set(posts)
-
-            showPostsRecyclerView(show = true)
         } else {
             showPostsRecyclerView(show = false)
         }

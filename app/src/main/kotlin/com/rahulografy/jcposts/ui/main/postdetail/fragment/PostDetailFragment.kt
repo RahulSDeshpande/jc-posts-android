@@ -20,6 +20,8 @@ class PostDetailFragment :
 
     override val layoutRes get() = R.layout.fragment_post_detail
 
+    override val toolbarId get() = R.id.toolbarPostDetail
+
     override var viewModelClass = PostDetailFragmentViewModel::class.java
 
     override val bindingVariable = BR.viewModel
@@ -60,6 +62,12 @@ class PostDetailFragment :
     private fun initPostDetail() {
         postsSharedViewModel.apply {
 
+            viewDataBinding.apply {
+                postEntity = post
+                commentsAdapter = CommentsAdapter()
+                executePendingBindings()
+            }
+
             cbPostIsFavourite.apply {
 
                 setOnCheckedChangeListener(null)
@@ -83,15 +91,9 @@ class PostDetailFragment :
 
     private fun initCommentsRecyclerView(comments: ArrayList<CommentEntity>?) {
         if (comments.isNullOrEmpty().not()) {
-            viewDataBinding.apply {
-                postEntity = postsSharedViewModel.post
-                commentsAdapter = CommentsAdapter()
-                executePendingBindings()
-            }
+            showCommentsRecyclerView(show = true)
 
             viewModel.commentsObservableField.set(comments)
-
-            showCommentsRecyclerView(show = true)
         } else {
             showCommentsRecyclerView(show = false)
         }
