@@ -24,4 +24,6 @@
     <dimen name="size_avatar">40dp</dimen>
     <dimen name="size_btn">50dp</dimen>
 
+    <dimen name="divider_height">0.5dp</dimen>
+
 </resources>

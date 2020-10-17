@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.rahulografy.jcposts.ui.main.postdetail.fragment.PostDetailFragmentViewModel" />
+
+        <variable
+            name="postEntity"
+            type="com.rahulografy.jcposts.data.source.local.posts.model.PostEntity" />
+
+        <variable
+            name="commentsAdapter"
+            type="com.rahulografy.jcposts.ui.main.postdetail.comments.adapter.CommentsAdapter" />
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,12 +49,13 @@
             layout="@layout/item_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayoutHome" />
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayoutHome"
+            bind:postEntity="@{postEntity}" />
 
         <View
             android:id="@+id/viewDivider1"
             android:layout_width="match_parent"
-            android:layout_height="0.5dp"
+            android:layout_height="@dimen/divider_height"
             android:background="@drawable/divider"
             android:elevation="4dp"
             app:layout_constraintTop_toBottomOf="@+id/layoutPostDetail" />
@@ -46,8 +64,10 @@
             android:id="@+id/srlPostDetail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:isRefreshing="@{viewModel.isDataProcessing}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewDivider1">
+            app:layout_constraintTop_toBottomOf="@+id/viewDivider1"
+            app:onRefreshListener="@{() -> viewModel.getComments(true)}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -68,7 +88,7 @@
                 <View
                     android:id="@+id/viewDivider2"
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
+                    android:layout_height="@dimen/divider_height"
                     android:layout_marginTop="@dimen/space_normal"
                     android:background="@drawable/divider"
                     app:layout_constraintTop_toBottomOf="@+id/tvPostDetailCommentsHeader" />
@@ -77,6 +97,8 @@
                     android:id="@+id/rvPostDetailComments"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
+                    app:adapter="@{commentsAdapter}"
+                    app:items="@{viewModel.commentsObservableField}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/viewDivider2"
                     tools:listitem="@layout/item_comment" />
