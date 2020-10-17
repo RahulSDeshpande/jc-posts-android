@@ -23,36 +23,21 @@
         android:focusable="true"
         android:padding="@dimen/space_normal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivPostIsFavourite"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:background="?attr/selectableItemBackgroundBorderless"
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cbPostIsFavourite"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@drawable/selector_favourite"
+            android:button="@null"
             android:clickable="true"
             android:focusable="true"
-            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_star_outlined"
             tools:srcCompat="@drawable/ic_star_filled" />
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/cbPostIsFavourite"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:background="@drawable/selector_favourite"
-            android:button="@null"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintEnd_toStartOf="@+id/ivPostIsFavourite"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_star_outlined"
-            tools:srcCompat="@drawable/ic_star_filled" />
-
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPostUserName"
+            android:id="@+id/tvPostId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -60,24 +45,26 @@
             android:maxLines="1"
             android:text="@{postEntity.id.toString()}"
             android:textColor="@color/colorAccent"
-            android:textSize="@dimen/text_medium"
+            android:textSize="@dimen/text_small"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="UserName" />
+            tools:text="#12" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPostTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/space_small"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginEnd="@dimen/space_small"
             android:ellipsize="end"
             android:fontFamily="@font/sans_bold"
             android:maxLines="2"
             android:text="@{postEntity.title}"
             android:textColor="@color/default_text_color_0"
             android:textSize="@dimen/text_medium"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPostUserName"
+            app:layout_constraintEnd_toStartOf="@+id/cbPostIsFavourite"
+            app:layout_constraintStart_toEndOf="@+id/tvPostId"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="@string/lorem_ipsum_tiny" />
 
         <androidx.appcompat.widget.AppCompatTextView

@@ -3,10 +3,13 @@ package com.rahulografy.jcposts.util.ext
 import android.content.Context
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.rahulografy.jcposts.R
+import com.rahulografy.jcposts.ui.component.view.DividerItemDecoration2
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator
 
@@ -50,9 +53,11 @@ fun RecyclerView.list(isVertical: Boolean = true) {
             itemAnimator = FadeInUpAnimator()
             if (itemDecorationCount == 0) {
                 addItemDecoration(
-                    DividerItemDecoration(
-                        context,
-                        LinearLayoutManager.VERTICAL
+                    DividerItemDecoration2(
+                        ContextCompat.getDrawable(
+                            context,
+                            R.drawable.divider
+                        )!!
                     )
                 )
             }
