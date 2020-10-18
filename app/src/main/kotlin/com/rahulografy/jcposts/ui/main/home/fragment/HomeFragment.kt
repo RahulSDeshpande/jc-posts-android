@@ -36,7 +36,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentViewModel>() 
 
         viewPager2Home?.apply {
             adapter = productFragmentAdapter
-            offscreenPageLimit = 2
+            offscreenPageLimit = contentTypes.size
         }
 
         TabLayoutMediator(
