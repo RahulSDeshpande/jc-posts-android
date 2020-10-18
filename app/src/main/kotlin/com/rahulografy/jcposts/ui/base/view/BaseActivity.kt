@@ -6,8 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.rahulografy.jcposts.R
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
+import org.imaginativeworld.oopsnointernet.NoInternetSnackbar
 import javax.inject.Inject
 
 abstract class BaseActivity<VDB : ViewDataBinding, BVM : BaseViewModel> :
@@ -23,6 +25,8 @@ abstract class BaseActivity<VDB : ViewDataBinding, BVM : BaseViewModel> :
     private lateinit var viewModel: BVM
 
     abstract val bindingVariable: Int
+
+    private var noInternetSnackbar: NoInternetSnackbar? = null
 
     @get:LayoutRes
     protected abstract val layoutRes: Int
@@ -49,12 +53,37 @@ abstract class BaseActivity<VDB : ViewDataBinding, BVM : BaseViewModel> :
         viewModel.start()
 
         initUi()
+
+        initNetworkMonitorSnackbar()
     }
 
     abstract fun initUi()
 
+    override fun onPause() {
+        super.onPause()
+        noInternetSnackbar?.destroy()
+    }
+
     override fun onDestroy() {
         viewModel.stop()
         super.onDestroy()
+    }
+
+    private fun initNetworkMonitorSnackbar() {
+        noInternetSnackbar =
+            NoInternetSnackbar
+                .Builder(
+                    activity = this,
+                    parent = findViewById(android.R.id.content)
+                )
+                .apply {
+                    indefinite = true
+                    noInternetConnectionMessage = getString(R.string.msg_no_internet)
+                    onAirplaneModeMessage = getString(R.string.msg_airplane_mode_is_turned_on)
+                    snackbarActionText = getString(R.string.settings)
+                    showActionToDismiss = true
+                    snackbarDismissActionText = getString(R.string.ok)
+                }
+                .build()
     }
 }

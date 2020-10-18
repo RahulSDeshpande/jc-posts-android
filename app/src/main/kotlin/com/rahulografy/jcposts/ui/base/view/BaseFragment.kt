@@ -13,9 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import com.rahulografy.jcposts.R
 import com.rahulografy.jcposts.di.ActivityScoped
-import com.rahulografy.jcposts.util.ext.toast
 import com.rahulografy.jcposts.util.isAppOnline
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
@@ -115,8 +113,8 @@ abstract class BaseFragment<VDB : ViewDataBinding, BVM : BaseViewModel> : Dagger
 
     fun isAppOnline() =
         isAppOnline(context).apply {
-            if (not()) {
+            /*if (not()) {
                 toast(getString(R.string.msg_no_internet))
-            }
+            }*/
         }
 }
