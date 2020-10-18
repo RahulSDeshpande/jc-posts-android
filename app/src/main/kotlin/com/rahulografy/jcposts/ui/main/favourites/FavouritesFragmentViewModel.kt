@@ -1,4 +1,4 @@
-package com.rahulografy.jcposts.ui.main.posts.fragment
+package com.rahulografy.jcposts.ui.main.favourites
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class PostsFragmentViewModel
+class FavouritesFragmentViewModel
 @Inject constructor(
     private val postsRepository: PostsRepository
 ) : BaseViewModel() {
@@ -34,7 +34,7 @@ class PostsFragmentViewModel
 
             addDisposable(
                 disposable = postsRepository
-                    .getPosts()
+                    .getFavouritePosts()
                     .subscribeOn(Schedulers.io())
                     .observeOn(scheduleInMainThread())
                     .subscribe({

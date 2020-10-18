@@ -3,12 +3,15 @@ package com.rahulografy.jcposts.util.ext
 import android.content.Context
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import jp.wasabeef.recyclerview.animators.FadeInDownAnimator
+import com.rahulografy.jcposts.R
+import com.rahulografy.jcposts.ui.component.view.DividerItemDecoration2
 import jp.wasabeef.recyclerview.animators.FadeInLeftAnimator
+import jp.wasabeef.recyclerview.animators.FadeInUpAnimator
 
 /**
  * Show [Toast] message
@@ -47,12 +50,14 @@ fun View.show(show: Boolean) {
 fun RecyclerView.list(isVertical: Boolean = true) {
     layoutManager =
         if (isVertical) {
-            itemAnimator = FadeInDownAnimator()
+            itemAnimator = FadeInUpAnimator()
             if (itemDecorationCount == 0) {
                 addItemDecoration(
-                    DividerItemDecoration(
-                        context,
-                        LinearLayoutManager.VERTICAL
+                    DividerItemDecoration2(
+                        ContextCompat.getDrawable(
+                            context,
+                            R.drawable.divider
+                        )!!
                     )
                 )
             }
@@ -90,5 +95,7 @@ fun RecyclerView.list(isVertical: Boolean = true) {
  * @param position Position of the item that has changed
  */
 fun RecyclerView?.notifyChange(position: Int) {
-    this?.adapter?.notifyItemChanged(position)
+    if (position >= 0) {
+        this?.adapter?.notifyItemChanged(position)
+    }
 }

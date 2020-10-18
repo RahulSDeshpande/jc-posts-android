@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.rahulografy.jcposts.di.ApplicationScoped
 import com.rahulografy.jcposts.di.ViewModelKey
 import com.rahulografy.jcposts.ui.main.activity.MainActivityViewModel
+import com.rahulografy.jcposts.ui.main.favourites.FavouritesFragmentViewModel
 import com.rahulografy.jcposts.ui.main.home.fragment.HomeFragmentViewModel
 import com.rahulografy.jcposts.ui.main.postdetail.fragment.PostDetailFragmentViewModel
 import com.rahulografy.jcposts.ui.main.posts.fragment.PostsFragmentViewModel
@@ -39,6 +40,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(PostsFragmentViewModel::class)
     abstract fun bindPostsFragmentViewModel(viewModel: PostsFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavouritesFragmentViewModel::class)
+    abstract fun bindFavouritesFragmentViewModel(viewModel: FavouritesFragmentViewModel): ViewModel
 
     @Binds
     @IntoMap

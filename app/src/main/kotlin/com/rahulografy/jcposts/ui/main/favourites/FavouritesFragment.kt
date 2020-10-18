@@ -1,11 +1,11 @@
-package com.rahulografy.jcposts.ui.main.posts.fragment
+package com.rahulografy.jcposts.ui.main.favourites
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.rahulografy.jcposts.BR
 import com.rahulografy.jcposts.R
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
-import com.rahulografy.jcposts.databinding.FragmentPostsBinding
+import com.rahulografy.jcposts.databinding.FragmentFavouritesBinding
 import com.rahulografy.jcposts.ui.base.view.BaseFragment
 import com.rahulografy.jcposts.ui.main.postdetail.fragment.PostDetailFragment
 import com.rahulografy.jcposts.ui.main.posts.PostsSharedViewModel
@@ -14,15 +14,15 @@ import com.rahulografy.jcposts.ui.main.posts.listener.PostEventListener
 import com.rahulografy.jcposts.util.ext.initViewModel
 import com.rahulografy.jcposts.util.ext.notifyChange
 import com.rahulografy.jcposts.util.ext.show
-import kotlinx.android.synthetic.main.fragment_posts.*
+import kotlinx.android.synthetic.main.fragment_favourites.*
 
-class PostsFragment :
-    BaseFragment<FragmentPostsBinding, PostsFragmentViewModel>(),
+class FavouritesFragment :
+    BaseFragment<FragmentFavouritesBinding, FavouritesFragmentViewModel>(),
     PostEventListener {
 
-    override val layoutRes get() = R.layout.fragment_posts
+    override val layoutRes get() = R.layout.fragment_favourites
 
-    override var viewModelClass = PostsFragmentViewModel::class.java
+    override var viewModelClass = FavouritesFragmentViewModel::class.java
 
     override val bindingVariable = BR.viewModel
 
@@ -44,18 +44,17 @@ class PostsFragment :
         viewModel.getPosts()
 
         viewDataBinding.apply {
-            postsAdapter = PostsAdapter(postEventListener = this@PostsFragment)
+            postsAdapter = PostsAdapter(postEventListener = this@FavouritesFragment)
             executePendingBindings()
         }
     }
 
     override fun initObservers() {
         postsSharedViewModel
-            .postUpdated
+            .favouritePostUpdated
             .observe(
-                lifecycleOwner = this@PostsFragment,
+                lifecycleOwner = this@FavouritesFragment,
                 observer = Observer {
-                    rvPosts.notifyChange(postsSharedViewModel.postListPosition)
                     viewModel.getPosts(force = true, showLoader = false)
                 }
             )
@@ -63,7 +62,7 @@ class PostsFragment :
         viewModel.apply {
             postsMutableLiveData
                 .observe(
-                    lifecycleOwner = this@PostsFragment,
+                    lifecycleOwner = this@FavouritesFragment,
                     observer = Observer { posts ->
                         initPostsRecyclerView(posts = posts)
                     }
@@ -74,8 +73,7 @@ class PostsFragment :
     private fun initPostsRecyclerView(posts: ArrayList<PostEntity>?) {
         if (posts.isNullOrEmpty().not()) {
             showPostsRecyclerView(show = true)
-            // viewModel.postsObservableField.set(posts)
-            viewDataBinding.postsAdapter?.submitList(posts)
+            viewModel.postsObservableField.set(posts)
         } else {
             showPostsRecyclerView(show = false)
         }
@@ -89,7 +87,7 @@ class PostsFragment :
     override fun onListItemClicked(listPosition: Int, postEntity: PostEntity) {
         openPostDetailFragment(
             listPosition = listPosition,
-            postId = postEntity
+            post = postEntity
         )
     }
 
@@ -99,14 +97,19 @@ class PostsFragment :
     ) {
         rvPosts.notifyChange(listPosition)
         viewModel.updatePost(postEntity)
-        postsSharedViewModel.favouritePostUpdated.value = postEntity
+        postsSharedViewModel.postListPosition = (postEntity.id ?: 0) - 1
+        postsSharedViewModel.postUpdated.value = postEntity
     }
 
-    private fun openPostDetailFragment(listPosition: Int, postId: PostEntity) {
-        postsSharedViewModel.postListPosition = listPosition
-        postsSharedViewModel.post = postId
+    private fun openPostDetailFragment(listPosition: Int, post: PostEntity) {
+        if (postDetailFragment == null) {
+            postDetailFragment = PostDetailFragment()
+        }
 
-        postDetailFragment = PostDetailFragment()
-        postDetailFragment?.show(childFragmentManager, postDetailFragment?.tag)
+        if (postDetailFragment?.isVisible != true) {
+            postsSharedViewModel.postListPosition = (post.id ?: 0) - 1
+            postsSharedViewModel.post = post
+            postDetailFragment?.show(childFragmentManager, postDetailFragment?.tag)
+        }
     }
 }

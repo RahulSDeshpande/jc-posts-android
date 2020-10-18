@@ -20,10 +20,11 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorWhite">
+        android:background="@color/colorWhite"
+        android:orientation="vertical">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayoutHome"
@@ -44,74 +45,87 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <include
-            android:id="@+id/layoutPostDetail"
-            layout="@layout/item_post"
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayoutHome"
-            bind:postEntity="@{postEntity}" />
-
-        <View
-            android:id="@+id/viewDivider1"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/divider_height"
-            android:background="@drawable/divider"
-            android:elevation="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/layoutPostDetail" />
-
-        <com.rahulografy.jcposts.ui.component.view.SwipeRefreshLayout2
-            android:id="@+id/srlPostDetail"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:isRefreshing="@{viewModel.isDataProcessing}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewDivider1"
-            app:onRefreshListener="@{() -> viewModel.getComments(true)}">
+            android:fillViewport="true"
+            android:minHeight="800dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvPostDetailCommentsHeader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_margin="@dimen/space_normal"
-                    android:fontFamily="@font/sans_regular"
-                    android:text="@string/comments"
-                    android:textColor="@color/default_text_color_2"
-                    android:textSize="@dimen/text_small"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <View
-                    android:id="@+id/viewDivider2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/divider_height"
-                    android:layout_marginTop="@dimen/space_normal"
-                    android:background="@drawable/divider"
-                    app:layout_constraintTop_toBottomOf="@+id/tvPostDetailCommentsHeader" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvPostDetailComments"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:adapter="@{commentsAdapter}"
-                    app:items="@{viewModel.commentsObservableField}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/viewDivider2"
-                    tools:listitem="@layout/item_comment" />
+                android:layout_height="wrap_content">
 
                 <include
-                    android:id="@+id/layoutNoData"
-                    layout="@layout/layout_no_data"
-                    android:visibility="gone" />
+                    android:id="@+id/layoutPostDetail"
+                    layout="@layout/item_post"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    bind:postEntity="@{postEntity}" />
+
+                <View
+                    android:id="@+id/viewDivider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/divider_height"
+                    android:background="@drawable/divider"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutPostDetail" />
+
+                <com.rahulografy.jcposts.ui.component.view.SwipeRefreshLayout2
+                    android:id="@+id/srlPostDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:isRefreshing="@{viewModel.isDataProcessing}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/viewDivider1"
+                    app:onRefreshListener="@{() -> viewModel.getComments(true)}">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPostDetailCommentsHeader"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_margin="@dimen/space_normal"
+                            android:fontFamily="@font/sans_regular"
+                            android:text="@string/comments"
+                            android:textColor="@color/default_text_color_2"
+                            android:textSize="@dimen/text_small"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <View
+                            android:id="@+id/viewDivider2"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/divider_height"
+                            android:layout_marginTop="@dimen/space_normal"
+                            android:background="@drawable/divider"
+                            app:layout_constraintTop_toBottomOf="@+id/tvPostDetailCommentsHeader" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rvPostDetailComments"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:adapter="@{commentsAdapter}"
+                            app:items="@{viewModel.commentsObservableField}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/viewDivider2"
+                            tools:listitem="@layout/item_comment" />
+
+                        <include
+                            android:id="@+id/layoutNoData"
+                            layout="@layout/layout_no_data"
+                            android:visibility="gone" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.rahulografy.jcposts.ui.component.view.SwipeRefreshLayout2>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.rahulografy.jcposts.ui.component.view.SwipeRefreshLayout2>
+        </ScrollView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

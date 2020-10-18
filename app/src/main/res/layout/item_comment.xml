@@ -27,7 +27,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCommentUserName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_small"
             android:ellipsize="end"
@@ -35,6 +35,7 @@
             android:maxLines="1"
             android:text="@{commentEntity.name}"
             android:textColor="@color/colorAccent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:textSize="@dimen/text_small"
             app:layout_constraintStart_toEndOf="@+id/ivCommentUser"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,10 +43,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCommentUserEmail"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_tiny"
             android:ellipsize="end"
+            app:layout_constraintEnd_toEndOf="parent"
             android:maxLines="1"
             android:text="@{commentEntity.email}"
             android:textColor="@color/default_text_color_2"
