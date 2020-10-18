@@ -53,7 +53,6 @@ class PostsRepository @Inject constructor(
                     .fromSingle(getAndSaveRemotePosts())
                     .andThen(getAndCacheLocalPosts())
             } else {
-                initApp()
                 getAndSaveRemotePosts()
             }
         } else {
@@ -65,7 +64,12 @@ class PostsRepository @Inject constructor(
         return remotePostsDataSource
             .getPosts()
             .doOnSuccess { posts ->
-                updateFavourites(posts)
+                if (isAppInit()) {
+                    updateFavourites(posts)
+                } else {
+                    initApp()
+                    localPostsDataSource.savePosts(posts)
+                }
             }.doFinally {
                 isCachedPostsDirty = false
             }

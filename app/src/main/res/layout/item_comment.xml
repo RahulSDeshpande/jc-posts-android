@@ -35,8 +35,8 @@
             android:maxLines="1"
             android:text="@{commentEntity.name}"
             android:textColor="@color/colorAccent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:textSize="@dimen/text_small"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivCommentUser"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Elliot Alderson" />
@@ -47,11 +47,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_tiny"
             android:ellipsize="end"
-            app:layout_constraintEnd_toEndOf="parent"
             android:maxLines="1"
             android:text="@{commentEntity.email}"
             android:textColor="@color/default_text_color_2"
             android:textSize="@dimen/text_tiny"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tvCommentUserName"
             app:layout_constraintTop_toBottomOf="@+id/tvCommentUserName"
             tools:text="elliot.alderson@mrrobot.com" />
