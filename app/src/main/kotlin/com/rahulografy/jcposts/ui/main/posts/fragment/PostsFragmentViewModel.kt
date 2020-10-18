@@ -2,13 +2,15 @@ package com.rahulografy.jcposts.ui.main.posts.fragment
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.viewModelScope
 import com.rahulografy.jcposts.data.repo.posts.PostsRepository
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 import com.rahulografy.jcposts.ui.base.view.BaseViewModel
-import com.rahulografy.jcposts.ui.main.posts.enum.ContentType.Companion.POSTS
 import com.rahulografy.jcposts.util.SingleLiveEvent
 import com.rahulografy.jcposts.util.ext.toArrayList
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PostsFragmentViewModel
@@ -16,49 +18,36 @@ class PostsFragmentViewModel
     private val postsRepository: PostsRepository
 ) : BaseViewModel() {
 
-    var contentType = POSTS
-
     val isDataProcessing = ObservableBoolean(false)
-
-    val posts = ObservableField<PostEntity>()
 
     var postsObservableField = ObservableField<ArrayList<PostEntity>>()
 
     var postsMutableLiveData = SingleLiveEvent<ArrayList<PostEntity>>()
 
-    fun getPosts(forceApi: Boolean = false) {
-        if (forceApi || postsMutableLiveData.value.isNullOrEmpty()) {
-            isDataProcessing.set(true)
+    fun getPosts(force: Boolean = false, showLoader: Boolean = true) {
 
-            if (contentType == POSTS) {
-                addDisposable(
-                    disposable = postsRepository
-                        .getPosts()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(scheduleInMainThread())
-                        .subscribe({
-                            onPostsReceived(it)
-                        }, { error ->
-                            postsMutableLiveData.value = null
-                            error.printStackTrace()
-                        })
-                )
-            } else {
-                addDisposable(
-                    disposable = postsRepository
-                        .getFavouritePosts()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(scheduleInMainThread())
-                        .subscribe({
-                            onPostsReceived(it)
-                        }, { error ->
-                            postsMutableLiveData.value = null
-                            error.printStackTrace()
-                        })
-                )
+        if (force || postsMutableLiveData.value.isNullOrEmpty()) {
+
+            if (showLoader) {
+                isDataProcessing.set(true)
             }
+
+            addDisposable(
+                disposable = postsRepository
+                    .getPosts()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(scheduleInMainThread())
+                    .subscribe({
+                        onPostsReceived(it)
+                    }, { error ->
+                        postsMutableLiveData.value = null
+                        error.printStackTrace()
+                    })
+            )
         } else {
-            isDataProcessing.set(false)
+            if (showLoader) {
+                isDataProcessing.set(false)
+            }
             postsMutableLiveData.value = postsMutableLiveData.value
         }
     }
@@ -69,6 +58,9 @@ class PostsFragmentViewModel
     }
 
     fun updatePost(postEntity: PostEntity) {
-        postsRepository.updatePost(postEntity)
+        viewModelScope.launch(Dispatchers.IO) {
+            postsRepository.updatePost(postEntity)
+            getPosts(force = true, showLoader = false)
+        }
     }
 }

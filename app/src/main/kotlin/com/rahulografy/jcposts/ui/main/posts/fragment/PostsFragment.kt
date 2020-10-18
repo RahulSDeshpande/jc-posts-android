@@ -10,7 +10,6 @@ import com.rahulografy.jcposts.ui.base.view.BaseFragment
 import com.rahulografy.jcposts.ui.main.postdetail.fragment.PostDetailFragment
 import com.rahulografy.jcposts.ui.main.posts.PostsSharedViewModel
 import com.rahulografy.jcposts.ui.main.posts.adapter.PostsAdapter
-import com.rahulografy.jcposts.ui.main.posts.enum.ContentType.Companion.POSTS
 import com.rahulografy.jcposts.ui.main.posts.listener.PostEventListener
 import com.rahulografy.jcposts.util.ext.initViewModel
 import com.rahulografy.jcposts.util.ext.notifyChange
@@ -20,18 +19,6 @@ import kotlinx.android.synthetic.main.fragment_posts.*
 class PostsFragment :
     BaseFragment<FragmentPostsBinding, PostsFragmentViewModel>(),
     PostEventListener {
-
-    companion object {
-        private const val ARG_CONTENT_TYPE = "ARG_CONTENT_TYPE"
-
-        fun init(contentType: String): PostsFragment {
-            val postFragment = PostsFragment()
-            val bundle = Bundle()
-            bundle.putString(ARG_CONTENT_TYPE, contentType)
-            postFragment.arguments = bundle
-            return postFragment
-        }
-    }
 
     override val layoutRes get() = R.layout.fragment_posts
 
@@ -52,8 +39,6 @@ class PostsFragment :
     }
 
     override fun initUi() {
-        viewModel.contentType = arguments?.getString(ARG_CONTENT_TYPE) ?: POSTS
-
         isAppOnline()
 
         viewModel.getPosts()
@@ -69,7 +54,10 @@ class PostsFragment :
             .postUpdated
             .observe(
                 lifecycleOwner = this@PostsFragment,
-                observer = Observer { }
+                observer = Observer {
+                    rvPosts.notifyChange(postsSharedViewModel.postListPosition)
+                    viewModel.getPosts(force = true, showLoader = false)
+                }
             )
 
         viewModel.apply {
@@ -86,8 +74,8 @@ class PostsFragment :
     private fun initPostsRecyclerView(posts: ArrayList<PostEntity>?) {
         if (posts.isNullOrEmpty().not()) {
             showPostsRecyclerView(show = true)
-
             // viewModel.postsObservableField.set(posts)
+            viewDataBinding.postsAdapter?.submitList(posts)
         } else {
             showPostsRecyclerView(show = false)
         }
@@ -111,17 +99,14 @@ class PostsFragment :
     ) {
         rvPosts.notifyChange(listPosition)
         viewModel.updatePost(postEntity)
+        postsSharedViewModel.favouritePostUpdated.value = postEntity
     }
 
     private fun openPostDetailFragment(listPosition: Int, postId: PostEntity) {
-        if (postDetailFragment == null) {
-            postDetailFragment = PostDetailFragment()
-        }
+        postsSharedViewModel.postListPosition = listPosition
+        postsSharedViewModel.post = postId
 
-        if (postDetailFragment?.isVisible != true) {
-            postsSharedViewModel.postListPosition = listPosition
-            postsSharedViewModel.post = postId
-            postDetailFragment?.show(childFragmentManager, postDetailFragment?.tag)
-        }
+        postDetailFragment = PostDetailFragment()
+        postDetailFragment?.show(childFragmentManager, postDetailFragment?.tag)
     }
 }

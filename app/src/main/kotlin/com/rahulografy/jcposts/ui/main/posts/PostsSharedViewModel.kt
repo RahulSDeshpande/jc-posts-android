@@ -11,4 +11,6 @@ class PostsSharedViewModel : BaseViewModel() {
     var post: PostEntity? = null
 
     var postUpdated = SingleLiveEvent<PostEntity>()
+
+    var favouritePostUpdated = SingleLiveEvent<PostEntity>()
 }
