@@ -2,6 +2,7 @@ package com.rahulografy.jcposts.ui.main.postdetail.fragment
 
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
+import androidx.lifecycle.viewModelScope
 import com.rahulografy.jcposts.data.repo.comments.CommentsRepository
 import com.rahulografy.jcposts.data.repo.posts.PostsRepository
 import com.rahulografy.jcposts.data.source.local.comments.model.CommentEntity
@@ -10,6 +11,8 @@ import com.rahulografy.jcposts.ui.base.view.BaseViewModel
 import com.rahulografy.jcposts.util.SingleLiveEvent
 import com.rahulografy.jcposts.util.ext.toArrayList
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class PostDetailFragmentViewModel
@@ -57,7 +60,11 @@ class PostDetailFragmentViewModel
         isDataProcessing.set(false)
     }
 
-    fun updatePost(postEntity: PostEntity) {
-        postsRepository.updatePost(postEntity)
+    fun updatePost(post: PostEntity?) {
+        post?.let {
+            viewModelScope.launch(Dispatchers.IO) {
+                postsRepository.updatePost(it)
+            }
+        }
     }
 }

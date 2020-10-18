@@ -83,7 +83,10 @@ class PostDetailFragment :
                             else null
                     }
 
+                    viewModel.updatePost(postsSharedViewModel.post)
+
                     postUpdated.value = post
+                    favouritePostUpdated.value = post
                 }
             }
         }
