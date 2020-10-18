@@ -2,8 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:id="@+id/coordinatorLayoutMain"
         android:layout_height="match_parent">
 
         <androidx.fragment.app.FragmentContainerView
@@ -14,6 +15,6 @@
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph_home" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
