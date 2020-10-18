@@ -1,19 +1,22 @@
 package com.rahulografy.jcposts.data.repo.posts
 
+import android.content.Context
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 import com.rahulografy.jcposts.di.ApplicationScoped
+import com.rahulografy.jcposts.di.qualifier.ApplicationContext
 import com.rahulografy.jcposts.di.qualifier.LocalData
 import com.rahulografy.jcposts.di.qualifier.RemoteData
 import com.rahulografy.jcposts.util.ext.replace
-import io.reactivex.Observable
+import com.rahulografy.jcposts.util.isAppOnline
+import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @ApplicationScoped
 class PostsRepository @Inject constructor(
     @LocalData private val localPostsDataSource: PostsDataSource,
-    @RemoteData private val remotePostsDataSource: PostsDataSource
+    @RemoteData private val remotePostsDataSource: PostsDataSource,
+    @ApplicationContext private val context: Context
 ) : PostsDataSource {
 
     private var cachedPosts = arrayListOf<PostEntity>()
@@ -28,15 +31,13 @@ class PostsRepository @Inject constructor(
         cachedPosts.replace(posts)
     }
 
-    override fun updatePost(post: PostEntity) {
+    override suspend fun updatePost(post: PostEntity) {
+        refreshPosts()
         cachedPosts
             .find { it.id == post.id }
             ?.isFavourite = post.isFavourite
 
-        // TODO | WIP | CONSIDER USING COROUTINE
-        Observable.just(localPostsDataSource)
-            .subscribeOn(Schedulers.io())
-            .subscribe { it.updatePost(post) }
+        localPostsDataSource.updatePost(post)
     }
 
     override fun getPosts(): Single<List<PostEntity>> {
@@ -44,8 +45,10 @@ class PostsRepository @Inject constructor(
             return Single.just(cachedPosts)
         }
 
-        return if (cachedPosts.isEmpty() || isCachedPostsDirty) {
-            getAndSaveRemotePosts()
+        return if (isAppOnline(context) && (cachedPosts.isEmpty() || isCachedPostsDirty)) {
+            Completable
+                .fromSingle(getAndSaveRemotePosts())
+                .andThen(getAndCacheLocalPosts())
         } else {
             getAndCacheLocalPosts()
         }
@@ -55,11 +58,34 @@ class PostsRepository @Inject constructor(
         return remotePostsDataSource
             .getPosts()
             .doOnSuccess { posts ->
-                cachedPosts.replace(posts)
-                localPostsDataSource.savePosts(posts)
+                updateFavourites(posts)
             }.doFinally {
                 isCachedPostsDirty = false
             }
+    }
+
+    private fun updateFavourites(posts: List<PostEntity>) {
+        val doOnSuccess =
+            getAndCacheLocalPosts()
+                .doOnSuccess { it ->
+
+                    val favourites = arrayListOf<Int?>()
+
+                    it.forEach {
+                        if (it.isFavourite) {
+                            favourites.add(it.id)
+                        }
+                    }
+
+                    posts.forEach {
+                        if (favourites.contains(it.id)) {
+                            it.isFavourite = true
+                        }
+                    }
+
+                    cachedPosts.replace(posts)
+                    localPostsDataSource.savePosts(posts)
+                }
     }
 
     private fun getAndCacheLocalPosts(): Single<List<PostEntity>> {

@@ -19,7 +19,7 @@ class PostsLocalDataSource @Inject constructor(
 
     override fun getPosts() = postsDao.getPosts()
 
-    override fun updatePost(post: PostEntity) {
+    override suspend fun updatePost(post: PostEntity) {
         postsDao.updatePost(post)
     }
 

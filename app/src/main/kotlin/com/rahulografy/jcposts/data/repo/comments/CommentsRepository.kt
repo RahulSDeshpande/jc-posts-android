@@ -1,16 +1,20 @@
 package com.rahulografy.jcposts.data.repo.comments
 
+import android.content.Context
 import com.rahulografy.jcposts.data.source.local.comments.model.CommentEntity
 import com.rahulografy.jcposts.di.ApplicationScoped
+import com.rahulografy.jcposts.di.qualifier.ApplicationContext
 import com.rahulografy.jcposts.di.qualifier.LocalData
 import com.rahulografy.jcposts.di.qualifier.RemoteData
+import com.rahulografy.jcposts.util.isAppOnline
 import io.reactivex.Single
 import javax.inject.Inject
 
 @ApplicationScoped
 class CommentsRepository @Inject constructor(
     @LocalData private val localCommentsDataSource: CommentsDataSource,
-    @RemoteData private val remoteCommentsDataSource: CommentsDataSource
+    @RemoteData private val remoteCommentsDataSource: CommentsDataSource,
+    @ApplicationContext private val context: Context
 ) : CommentsDataSource {
 
     private var cachedPostIdWiseCommentsMap = linkedMapOf<Int, List<CommentEntity>>()
@@ -34,9 +38,10 @@ class CommentsRepository @Inject constructor(
             return Single.just(cachedPostIdWiseCommentsMap[postId])
         }
 
-        return if (cachedPostIdWiseCommentsMap.containsKey(postId).not()
-            || cachedPostIdWiseCommentsMap[postId]!!.isEmpty()
-            || isCachedCommentsDirty
+        return if (isAppOnline(context)
+            && (cachedPostIdWiseCommentsMap.containsKey(postId).not()
+                    || cachedPostIdWiseCommentsMap[postId]!!.isEmpty()
+                    || isCachedCommentsDirty)
         ) {
             getAndSaveRemoteComments(postId = postId)
         } else {

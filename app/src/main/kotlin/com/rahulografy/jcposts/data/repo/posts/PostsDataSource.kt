@@ -7,7 +7,7 @@ interface PostsDataSource {
 
     fun savePosts(posts: List<PostEntity>) {}
 
-    fun updatePost(post: PostEntity) {}
+    suspend fun updatePost(post: PostEntity) {}
 
     fun getPosts(): Single<List<PostEntity>>
 

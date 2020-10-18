@@ -95,5 +95,7 @@ fun RecyclerView.list(isVertical: Boolean = true) {
  * @param position Position of the item that has changed
  */
 fun RecyclerView?.notifyChange(position: Int) {
-    this?.adapter?.notifyItemChanged(position)
+    if (position >= 0) {
+        this?.adapter?.notifyItemChanged(position)
+    }
 }
