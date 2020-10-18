@@ -6,6 +6,8 @@ import com.rahulografy.jcposts.di.ApplicationScoped
 import com.rahulografy.jcposts.di.qualifier.ApplicationContext
 import com.rahulografy.jcposts.di.qualifier.LocalData
 import com.rahulografy.jcposts.di.qualifier.RemoteData
+import com.rahulografy.jcposts.util.ext.initApp
+import com.rahulografy.jcposts.util.ext.isAppInit
 import com.rahulografy.jcposts.util.ext.replace
 import com.rahulografy.jcposts.util.isAppOnline
 import io.reactivex.Completable
@@ -46,9 +48,14 @@ class PostsRepository @Inject constructor(
         }
 
         return if (isAppOnline(context) && (cachedPosts.isEmpty() || isCachedPostsDirty)) {
-            Completable
-                .fromSingle(getAndSaveRemotePosts())
-                .andThen(getAndCacheLocalPosts())
+            if (isAppInit()) {
+                Completable
+                    .fromSingle(getAndSaveRemotePosts())
+                    .andThen(getAndCacheLocalPosts())
+            } else {
+                initApp()
+                getAndSaveRemotePosts()
+            }
         } else {
             getAndCacheLocalPosts()
         }
