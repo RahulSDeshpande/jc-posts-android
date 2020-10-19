@@ -18,7 +18,6 @@ import com.rahulografy.jcposts.util.Constants.Network.Db.ENTITY_COMMENT
         onDelete = ForeignKey.CASCADE
     )]
 )
-// @TypeConverters(RoomConverter::class)
 data class CommentEntity(
 
     @PrimaryKey

@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 import com.rahulografy.jcposts.databinding.ItemPostBinding
 import com.rahulografy.jcposts.ui.main.posts.listener.PostEventListener
+import com.rahulografy.jcposts.util.isAppOnline
 
 class PostViewHolder(private val binding: ItemPostBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -40,6 +41,7 @@ class PostViewHolder(private val binding: ItemPostBinding) :
                             favouritedTime =
                                 if (isChecked) System.currentTimeMillis()
                                 else null
+                            isSyncPending = isAppOnline(context).not()
                         }
                     )
                 }

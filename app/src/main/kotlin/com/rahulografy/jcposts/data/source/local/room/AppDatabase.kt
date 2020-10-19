@@ -12,7 +12,7 @@ import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
         PostEntity::class,
         CommentEntity::class
     ],
-    version = 3,
+    version = 5,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
