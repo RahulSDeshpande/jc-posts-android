@@ -20,6 +20,7 @@ class DatabaseModule {
                 AppDatabase::class.java,
                 DB_NAME
             )
+            .addMigrations(AppDatabase.migrateFrom3To5)
             .fallbackToDestructiveMigration()
             .build()
 

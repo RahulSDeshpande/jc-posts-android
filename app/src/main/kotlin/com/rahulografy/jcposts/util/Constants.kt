@@ -26,6 +26,8 @@ object Constants {
         object Db {
             const val DB_NAME = "jc-posts.db"
 
+            const val ENTITY_POST_NEW = "post-new"
+
             const val ENTITY_POST = "post"
             const val ENTITY_COMMENT = "comment"
         }
