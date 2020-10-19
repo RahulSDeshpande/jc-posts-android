@@ -24,6 +24,8 @@ class PostsFragmentViewModel
 
     var postsMutableLiveData = SingleLiveEvent<ArrayList<PostEntity>>()
 
+    var postsSyncingLiveData = SingleLiveEvent<Boolean>()
+
     fun getPosts(force: Boolean = false, showLoader: Boolean = true) {
 
         if (force || postsMutableLiveData.value.isNullOrEmpty()) {
@@ -62,5 +64,32 @@ class PostsFragmentViewModel
             postsRepository.updatePost(postEntity)
             getPosts(force = true, showLoader = false)
         }
+    }
+
+    fun syncPendingPosts() {
+        addDisposable(
+            disposable = postsRepository
+                .getUnSyncedPosts()
+                .subscribeOn(Schedulers.io())
+                .observeOn(scheduleInMainThread())
+                .subscribe({ unSyncedPosts ->
+                    if (unSyncedPosts.isNullOrEmpty().not()) {
+                        postsSyncingLiveData.value = true
+                        viewModelScope.launch(Dispatchers.IO) {
+                            postsRepository.syncPendingPosts(
+                                posts = unSyncedPosts.apply {
+                                    map { it.isSyncPending = false }
+                                }
+                            )
+                            getPosts(force = true, showLoader = false)
+                        }
+                    } else {
+                        postsSyncingLiveData.value = false
+                    }
+                }, { error ->
+                    postsSyncingLiveData.value = false
+                    error.printStackTrace()
+                })
+        )
     }
 }
