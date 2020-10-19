@@ -3,9 +3,12 @@ package com.rahulografy.jcposts.util
 import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
+import com.rahulografy.jcposts.util.Constants.Network.Api.URL_BASE
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
+
+// var isAppOnline = true
 
 private const val TAG = "NetworkConnection"
 
@@ -20,8 +23,7 @@ fun isAppOnline(context: Context?): Boolean {
 fun isServerUp(context: Context): Boolean {
     if (isAppOnline(context)) {
         try {
-            val connection =
-                URL(Constants.Network.Api.URL_BASE).openConnection() as HttpURLConnection
+            val connection = URL(URL_BASE).openConnection() as HttpURLConnection
             connection.setRequestProperty("User-Agent", "Test")
             connection.setRequestProperty("Connection", "close")
             connection.connectTimeout = 10000
