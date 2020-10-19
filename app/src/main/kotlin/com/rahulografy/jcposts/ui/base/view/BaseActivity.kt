@@ -7,8 +7,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.rahulografy.jcposts.R
+import com.rahulografy.jcposts.util.event.InternetConnectionEvent
 import dagger.android.AndroidInjection
 import dagger.android.support.DaggerAppCompatActivity
+import org.greenrobot.eventbus.EventBus
+import org.imaginativeworld.oopsnointernet.ConnectionCallback
 import org.imaginativeworld.oopsnointernet.NoInternetSnackbar
 import javax.inject.Inject
 
@@ -83,7 +86,17 @@ abstract class BaseActivity<VDB : ViewDataBinding, BVM : BaseViewModel> :
                     snackbarActionText = getString(R.string.settings)
                     showActionToDismiss = true
                     snackbarDismissActionText = getString(R.string.ok)
+                    connectionCallback = object : ConnectionCallback {
+                        override fun hasActiveConnection(hasActiveConnection: Boolean) {
+                            // isAppOnline = hasActiveConnection
+                            onInternetConnectionUpdate(isActive = hasActiveConnection)
+                        }
+                    }
                 }
                 .build()
+    }
+
+    open fun onInternetConnectionUpdate(isActive: Boolean) {
+        EventBus.getDefault().post(InternetConnectionEvent(isActive = isActive))
     }
 }
