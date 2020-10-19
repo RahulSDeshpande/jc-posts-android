@@ -24,4 +24,16 @@ class PostsLocalDataSource @Inject constructor(
     }
 
     override fun getFavouritePosts() = postsDao.getFavouritePosts()
+
+    override fun getUnSyncedPosts() = postsDao.getUnSyncedPosts()
+
+    override suspend fun syncPendingPosts(posts: List<PostEntity>): Boolean {
+        posts.map { post ->
+            post.id?.let { id ->
+                postsDao.updateIsPendingSync(postId = id, isSyncPending = post.isSyncPending)
+            }
+        }
+
+        return posts.isNotEmpty()
+    }
 }

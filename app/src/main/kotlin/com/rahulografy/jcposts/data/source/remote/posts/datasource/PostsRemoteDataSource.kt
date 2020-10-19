@@ -14,4 +14,7 @@ class PostsRemoteDataSource
 ) : PostsDataSource {
 
     override fun getPosts(): Single<List<PostEntity>> = postsRemoteService.getPosts()
+
+    // TODO | RETURN VALUE IS MOCKED
+    override suspend fun syncPendingPosts(posts: List<PostEntity>) = true
 }
