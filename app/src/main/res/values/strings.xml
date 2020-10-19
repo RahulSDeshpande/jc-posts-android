@@ -17,6 +17,8 @@
 
     <string name="msg_yes_internet">Your device is now online.</string>
 
+    <string name="msg_yes_internet_and_sync_posts">Your device is now online.\nSyncing the updated posts with the server.</string>
+
     <string name="msg_no_data">No data found. Please pull to refresh.</string>
 
     <!-- 'Lorem ipsum..' Placeholders -->

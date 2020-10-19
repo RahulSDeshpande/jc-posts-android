@@ -25,4 +25,10 @@ interface PostsDao {
 
     @Query("SELECT * FROM post WHERE isFavourite = 1 ORDER BY favouritedTime DESC")
     fun getFavouritePosts(): Single<List<PostEntity>>
+
+    @Query("SELECT * FROM post WHERE isSyncPending = 1")
+    fun getUnSyncedPosts(): Single<List<PostEntity>>
+
+    @Query("UPDATE post SET isSyncPending = :isSyncPending WHERE id = :postId")
+    fun updateIsPendingSync(postId: Int, isSyncPending: Boolean)
 }

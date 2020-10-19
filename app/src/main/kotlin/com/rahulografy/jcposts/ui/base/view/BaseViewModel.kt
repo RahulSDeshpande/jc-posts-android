@@ -12,7 +12,9 @@ abstract class BaseViewModel : ViewModel() {
 
     open fun start() {}
 
-    open fun stop() {}
+    open fun stop() {
+        compositeDisposable.dispose()
+    }
 
     protected fun addDisposable(disposable: Disposable?) {
         disposable?.let {

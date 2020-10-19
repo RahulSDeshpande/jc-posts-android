@@ -14,9 +14,13 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.rahulografy.jcposts.di.ActivityScoped
+import com.rahulografy.jcposts.util.event.InternetConnectionEvent
 import com.rahulografy.jcposts.util.isAppOnline
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import javax.inject.Inject
 
 @ActivityScoped
@@ -87,6 +91,21 @@ abstract class BaseFragment<VDB : ViewDataBinding, BVM : BaseViewModel> : Dagger
         initObservers()
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    override fun onDestroyView() {
+        viewModel.stop()
+        super.onDestroyView()
+    }
+
     private fun initToolBar() {
         if (toolbarId != 0 && view != null) {
             getSupportActionBar(requireView().findViewById(toolbarId))
@@ -106,15 +125,17 @@ abstract class BaseFragment<VDB : ViewDataBinding, BVM : BaseViewModel> : Dagger
 
     open fun initObservers() {}
 
-    override fun onDestroyView() {
-        viewModel.stop()
-        super.onDestroyView()
-    }
-
     fun isAppOnline() =
         isAppOnline(context).apply {
             /*if (not()) {
                 toast(getString(R.string.msg_no_internet))
             }*/
         }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onInternetConnectionUpdate(event: InternetConnectionEvent) {
+        onInternetConnectionUpdate(isActive = event.isActive)
+    }
+
+    open fun onInternetConnectionUpdate(isActive: Boolean) {}
 }

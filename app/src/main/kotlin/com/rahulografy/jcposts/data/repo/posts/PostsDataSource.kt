@@ -14,4 +14,8 @@ interface PostsDataSource {
     fun getFavouritePosts(): Single<List<PostEntity>> = Single.just(arrayListOf())
 
     fun refreshPosts() {}
+
+    fun getUnSyncedPosts(): Single<List<PostEntity>> = Single.just(arrayListOf())
+
+    suspend fun syncPendingPosts(posts: List<PostEntity>) = false
 }

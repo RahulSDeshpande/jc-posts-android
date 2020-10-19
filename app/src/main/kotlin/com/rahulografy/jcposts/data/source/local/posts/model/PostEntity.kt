@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName
 import com.rahulografy.jcposts.util.Constants.Network.Db.ENTITY_POST
 
 @Entity(tableName = ENTITY_POST)
-// @TypeConverters(RoomConverter::class)
 data class PostEntity(
 
     @PrimaryKey
@@ -36,5 +35,8 @@ data class PostEntity(
     var isFavourite: Boolean = false,
 
     @ColumnInfo(name = "favouritedTime")
-    var favouritedTime: Long?
+    var favouritedTime: Long?,
+
+    @ColumnInfo(name = "isSyncPending")
+    var isSyncPending: Boolean = false
 )

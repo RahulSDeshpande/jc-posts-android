@@ -7,6 +7,7 @@ import com.rahulografy.jcposts.R
 import com.rahulografy.jcposts.data.source.local.posts.model.PostEntity
 import com.rahulografy.jcposts.databinding.FragmentPostsBinding
 import com.rahulografy.jcposts.ui.base.view.BaseFragment
+import com.rahulografy.jcposts.ui.main.activity.MainActivity
 import com.rahulografy.jcposts.ui.main.postdetail.fragment.PostDetailFragment
 import com.rahulografy.jcposts.ui.main.posts.PostsSharedViewModel
 import com.rahulografy.jcposts.ui.main.posts.adapter.PostsAdapter
@@ -61,11 +62,22 @@ class PostsFragment :
             )
 
         viewModel.apply {
+
             postsMutableLiveData
                 .observe(
                     lifecycleOwner = this@PostsFragment,
                     observer = Observer { posts ->
                         initPostsRecyclerView(posts = posts)
+                    }
+                )
+
+            postsSyncingLiveData
+                .observe(
+                    lifecycleOwner = this@PostsFragment,
+                    observer = Observer { postsSyncing ->
+                        if (postsSyncing) {
+                            showSnackbar(getString(R.string.msg_yes_internet_and_sync_posts))
+                        }
                     }
                 )
         }
@@ -108,5 +120,15 @@ class PostsFragment :
 
         postDetailFragment = PostDetailFragment()
         postDetailFragment?.show(childFragmentManager, postDetailFragment?.tag)
+    }
+
+    override fun onInternetConnectionUpdate(isActive: Boolean) {
+        if (isActive) {
+            viewModel.syncPendingPosts()
+        }
+    }
+
+    private fun showSnackbar(message: String) {
+        (activity as MainActivity).showSnackbar(message = message)
     }
 }

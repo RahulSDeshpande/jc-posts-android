@@ -37,7 +37,10 @@ class PostsRepository @Inject constructor(
         refreshPosts()
         cachedPosts
             .find { it.id == post.id }
-            ?.isFavourite = post.isFavourite
+            ?.apply {
+                isFavourite = post.isFavourite
+                isSyncPending = post.isSyncPending
+            }
 
         localPostsDataSource.updatePost(post)
     }
@@ -123,5 +126,17 @@ class PostsRepository @Inject constructor(
     // TODO | WIP
     override fun refreshPosts() {
         isCachedPostsDirty = true
+    }
+
+    override fun getUnSyncedPosts(): Single<List<PostEntity>> {
+        return localPostsDataSource.getUnSyncedPosts()
+    }
+
+    override suspend fun syncPendingPosts(posts: List<PostEntity>): Boolean {
+        val postsSynced = remotePostsDataSource.syncPendingPosts(posts)
+        if (postsSynced) {
+            localPostsDataSource.syncPendingPosts(posts)
+        }
+        return postsSynced
     }
 }
