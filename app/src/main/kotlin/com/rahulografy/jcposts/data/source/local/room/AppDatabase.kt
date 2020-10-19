@@ -25,6 +25,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun commentsDao(): CommentsDao
 
+    // WIP
     companion object {
         // TODO | VERIFY CUSTOM DB MIGRATIONS
         val migrateFrom3To5 = object : Migration(4, 5) {
@@ -44,7 +45,7 @@ abstract class AppDatabase : RoomDatabase() {
                 database.execSQL("DROP TABLE $ENTITY_POST")
 
                 // Change the table name from 'post-new' to 'post'
-                database.execSQL("ALTER TABLE $ENTITY_POST_NEW RENAME TO $ENTITY_POST");
+                database.execSQL("ALTER TABLE $ENTITY_POST_NEW RENAME TO $ENTITY_POST")
             }
         }
     }
