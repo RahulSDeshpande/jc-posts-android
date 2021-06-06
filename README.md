@@ -1,4 +1,5 @@
-# JC Posts Android App
+# MVVM Template Android App
+Posts from https://jsonplaceholder.typicode.com/
 
 ## Tech stack
 
